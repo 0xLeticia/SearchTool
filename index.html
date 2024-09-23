@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Search | Engines</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-image: url('https://w.wallhaven.cc/full/pn/wallhaven-pneeln.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #00FF00;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        .footer {
+            position: relative;
+            margin-top: 20px;
+            font-size: 14px;
+            text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00;
+            padding: 5px 10px;
+            border-radius: 5px;
+            backdrop-filter: blur(3px);
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            border-radius: 5px;
+            margin-bottom: 25px;
+            animation: glow 1s ease-in-out infinite alternate;
+            text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00;
+            padding: 10px 20px;
+            backdrop-filter: blur(5px);
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00;
+            }
+            100% {
+                text-shadow: 0 0 20px #00FF00, 0 0 30px #00FF00;
+            }
+        }
+
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 50px;
+            backdrop-filter: blur(5px);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        input[type="text"], select, button {
+            padding: 10px;
+            margin: 10px;
+            border: 2px solid #00FF00;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #00FF00;
+            font-size: 20px;
+            transition: background-color 0.3s, transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            width: calc(100% - 24px);
+            max-width: 400px;
+        }
+
+        input[type="text"]:focus, select:focus {
+            background-color: rgba(0, 255, 0, 0.1);
+            transform: scale(1.05);
+            outline: none;
+            box-shadow: 0 4px 10px rgba(0, 255, 0, 0.5);
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #00FF00;
+            color: black;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            background-color: rgba(0, 255, 0, 0.3);
+            color: #00FF00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+            transform: scale(1.05);
+        }
+
+        .checkbox-container {
+            max-height: 0; /* Inicialmente oculto */
+            opacity: 0; /* Inicialmente oculto */
+            overflow: hidden; /* Oculta o conteúdo */
+            transition: max-height 0.5s ease, opacity 0.5s ease; /* Animação suave */
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-container.active {
+            max-height: 500px; /* Ajuste conforme necessário */
+            opacity: 1; /* Exibir o container */
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            color: #00FF00;
+            cursor: pointer;
+            justify-content: space-between;
+            padding: 10px; /* Adicione algum padding */
+            transition: transform 0.3s ease; /* Suave para a animação */
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+            accent-color: #00FF00; /* Para navegadores modernos */
+            width: 24px; /* Aumentar o tamanho do checkmark */
+            height: 24px; /* Aumentar o tamanho do checkmark */
+            transition: transform 0.3s ease; /* Transição suave */
+        }
+
+        input[type="checkbox"]:checked {
+            transform: scale(1.2); /* Animação de aumento ao marcar */
+        }
+
+        .additional-input {
+            opacity: 0; /* Inicialmente oculto */
+            padding: 5px;
+            border: 1px solid #00FF00;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #00FF00;
+            width: calc(50% - 10px);
+            transition: opacity 0.3s ease, transform 0.3s ease; /* Animação suave */
+            transform: translateY(-10px); /* Começa ligeiramente acima */
+        }
+
+        .additional-input.active {
+            opacity: 1; /* Exibir o input */
+            transform: translateY(0); /* Volta à posição original */
+        }
+
+        .additional-input:focus {
+            background-color: rgba(0, 255, 0, 0.1);
+            outline: none;
+            box-shadow: 0 4px 10px rgba(0, 255, 0, 0.5);
+        }
+
+        @media (max-width: 600px) {
+            input[type="text"], select, button {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔍 Search</h1>
+        <div class="form-container">
+            <form id="search-form" action="" method="get">
+                <input type="text" id="search-query" placeholder="Search here..." required>
+                <select id="search-engine" name="engine">
+                    <option value="google">Google</option>
+                    <option value="bing">Bing</option>
+                    <option value="duckduckgo">DuckDuckGo</option>
+                    <option value="yahoo">Yahoo</option>
+                    <option value="shodan">Shodan.io</option>
+                </select>
+                
+                <button type="button" id="dorking-mode">Dorking Mode</button>
+                
+                <div class="checkbox-container" id="dorking-options">
+                    <h3 style="color: #00FF00;">Dorking options:</h3>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="dork-checkbox" value="site:"> site:
+                        <input type="text" class="additional-input" placeholder="Enter site..." disabled>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="dork-checkbox" value="filetype:"> filetype:
+                        <input type="text" class="additional-input" placeholder="Enter file type..." disabled>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="dork-checkbox" value="inurl:"> inurl:
+                        <input type="text" class="additional-input" placeholder="Enter URL..." disabled>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="dork-checkbox" value="intitle:"> intitle:
+                        <input type="text" class="additional-input" placeholder="Enter title..." disabled>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="dork-checkbox" value="cache:"> cache:
+                        <input type="text" class="additional-input" placeholder="Enter cache..." disabled>
+                    </label>
+                </div>
+                
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <a href="https://github.com/dak-zin" style="color: #00FF00; text-decoration: none;">
+            💻 | GitHub: dak
+        </a>
+    </div>
+
+    <script>
+        const placeholderText = "Search here...";
+        const inputField = document.getElementById('search-query');
+
+        function typePlaceholder(text, index) {
+            if (index < text.length) {
+                inputField.placeholder = text.slice(0, index + 1);
+                setTimeout(() => typePlaceholder(text, index + 1), 100);
+            } else {
+                setTimeout(() => erasePlaceholder(text, text.length), 500);
+            }
+        }
+
+        function erasePlaceholder(text, index) {
+            if (index >= 0) {
+                inputField.placeholder = text.slice(0, index);
+                setTimeout(() => erasePlaceholder(text, index - 1), 50);
+            } else {
+                setTimeout(() => typePlaceholder(text, 0), 1000);
+            }
+        }
+
+        // Iniciar a animação
+        typePlaceholder(placeholderText, 0);
+
+        document.getElementById('dorking-mode').addEventListener('click', () => {
+            const checkboxContainer = document.getElementById('dorking-options');
+            checkboxContainer.classList.toggle('active'); // Adiciona a classe para animação
+        });
+
+        document.querySelectorAll('.dork-checkbox').forEach((checkbox) => {
+            checkbox.addEventListener('change', function() {
+                const additionalInput = this.nextElementSibling;
+                additionalInput.disabled = !this.checked;
+
+                if (this.checked) {
+                    additionalInput.classList.add('active'); // Adiciona a classe para animação
+                } else {
+                    additionalInput.classList.remove('active'); // Remove a classe para animação
+                    additionalInput.value = ''; // Limpar valor se desmarcado
+                }
+            });
+        });
+
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = inputField.value;
+            const engine = document.getElementById('search-engine').value;
+            const dorkingOptions = Array.from(document.querySelectorAll('.dork-checkbox:checked')).map(checkbox => {
+                const additionalInput = checkbox.nextElementSibling;
+                return checkbox.value + (additionalInput.value ? additionalInput.value : '');
+            }).join(' ');
+
+            const finalQuery = dorkingOptions ? dorkingOptions + ' ' + query : query;
+
+            let url = '';
+
+            switch(engine) {
+                case 'google':
+                    url = `https://www.google.com/search?q=${encodeURIComponent(finalQuery)}`;
+                    break;
+                case 'bing':
+                    url = `https://www.bing.com/search?q=${encodeURIComponent(finalQuery)}`;
+                    break;
+                case 'duckduckgo':
+                    url = `https://duckduckgo.com/?q=${encodeURIComponent(finalQuery)}`;
+                    break;
+                case 'yahoo':
+                    url = `https://search.yahoo.com/search?p=${encodeURIComponent(finalQuery)}`;
+                    break;
+                case 'shodan':
+                    url = `https://www.shodan.io/search?query=${encodeURIComponent(finalQuery)}`;
+                    break;
+            }
+
+            window.location.href = url;
+        });
+    </script>
+</body>
+
+</html>
+
